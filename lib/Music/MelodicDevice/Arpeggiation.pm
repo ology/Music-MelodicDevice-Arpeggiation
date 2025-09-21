@@ -17,7 +17,7 @@ use constant TICKS => 96;
 
   my $arp = Music::MelodicDevice::Arpeggiation->new;
 
-  my $arped = $arp->arp([60,64,67], 1, [0,1,2,1,0], 3);
+  my $arped = $arp->arp([60,64,67], 1, [0,1,2,1], 3);
 
 =head1 DESCRIPTION
 
