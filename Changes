@@ -1,6 +1,7 @@
 Revision history for Music-MelodicDevice-Arpeggiation
 
 {{$NEXT}}
+  - Add the arp() method description.
 
 0.0102 2025-09-21 11:25:38
     - Fix example again.
