@@ -117,7 +117,8 @@ Create a new C<Music::MelodicDevice::Arpeggiation> object.
   $notes = $arp->arp(\@pitches, $duration, \@pattern);
   $notes = $arp->arp(\@pitches, $duration, \@pattern, $repeats);
 
-TODO description
+Return a list of the number of notes, selected by the arpeggiated
+pattern, and distributed across the duration.
 
 =cut
 
