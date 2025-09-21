@@ -35,7 +35,7 @@ Arpeggiation note index selection pattern.
 =cut
 
 has pattern => (
-    is      => 'ro',
+    is      => 'rw',
     isa     => sub { die "$_[0] is not an array reference" unless ref($_[0]) eq 'ARRAY' },
     default => sub { [0,1,2] },
 );
@@ -49,7 +49,7 @@ Duration over which to distribute the arpeggiated pattern of notes.
 =cut
 
 has duration => (
-    is      => 'ro',
+    is      => 'rw',
     isa     => sub { die "$_[0] is not a valid duration" unless $_[0] =~ /^\d+\.?(\d+)?$/ },
     default => sub { 1 },
 );
@@ -63,7 +63,7 @@ Number of times to repeat the arpeggiated pattern of notes.
 =cut
 
 has repeats => (
-    is      => 'ro',
+    is      => 'rw',
     isa     => sub { die "$_[0] is not a positive integer" unless $_[0] =~ /^\d+$/ },
     default => sub { 1 },
 );
@@ -77,7 +77,7 @@ Show progress.
 =cut
 
 has verbose => (
-    is      => 'ro',
+    is      => 'rw',
     isa     => sub { die "$_[0] is not a valid boolean" unless $_[0] =~ /^[01]$/ },
     default => sub { 0 },
 );
