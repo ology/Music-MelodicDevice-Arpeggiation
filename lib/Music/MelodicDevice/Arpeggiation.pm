@@ -50,7 +50,7 @@ Duration over which to distribute the arpeggiated pattern of notes.
 
 has duration => (
     is      => 'ro',
-    isa     => sub { die "$_[0] is not a valid duration" unless $_[0] =~ /^\d+\.?\d+?$/ },
+    isa     => sub { die "$_[0] is not a valid duration" unless $_[0] =~ /^\d+\.?(\d+)?$/ },
     default => sub { 1 },
 );
 
