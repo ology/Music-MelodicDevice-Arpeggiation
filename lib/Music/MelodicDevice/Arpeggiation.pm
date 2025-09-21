@@ -94,8 +94,6 @@ has verbose => (
 
 Create a new C<Music::MelodicDevice::Arpeggiation> object.
 
-=for Pod::Coverage OCTAVES
-
 =for Pod::Coverage TICKS
 
 =cut
@@ -129,7 +127,7 @@ sub arp {
     my @arp;
     for my $i (1 .. $repeats) {
         for my $p (@$pattern) {
-            push @arp, $notes->[$p];
+            push @arp, [ $z, $notes->[$p] ];
         }
     }
     print 'Arp: ', ddc(\@arp) if $self->verbose;
