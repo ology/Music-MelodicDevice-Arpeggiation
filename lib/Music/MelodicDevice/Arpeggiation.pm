@@ -28,6 +28,9 @@ groups of notes.
 
 =head2 pattern
 
+  $arp->pattern(\@pattern);
+  $pattern = $arp->pattern;
+
 Default: C<[0,1,2]>
 
 Arpeggiation note index selection pattern.
@@ -41,6 +44,9 @@ has pattern => (
 );
 
 =head2 duration
+
+  $arp->duration($duration);
+  $duration = $arp->duration;
 
 Default: C<1> (quarter-note)
 
@@ -56,6 +62,9 @@ has duration => (
 
 =head2 repeats
 
+  $arp->repeats($repeats);
+  $repeats = $arp->repeats;
+
 Default: C<1>
 
 Number of times to repeat the arpeggiated pattern of notes.
@@ -69,6 +78,9 @@ has repeats => (
 );
 
 =head2 verbose
+
+  $arp->verbose($verbose);
+  $verbose = $arp->verbose;
 
 Default: C<0>
 
