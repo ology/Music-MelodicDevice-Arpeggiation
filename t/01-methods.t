@@ -41,7 +41,7 @@ subtest arp_type => sub {
     is ref($got), 'HASH', 'arp_type';
     $got = $mda->arp_type('up');
     is ref($got), 'CODE', 'arp_type';
-    $mda->arp_type('foo', sub { 42 });
+    $mda->arp_type('foo', sub { [0,1] });
     $got = $mda->arp_type('foo');
     is ref($got), 'CODE', 'arp_type';
 };
