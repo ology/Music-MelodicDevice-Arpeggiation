@@ -2,6 +2,7 @@ Revision history for Music-MelodicDevice-Arpeggiation
 
 {{$NEXT}}
   - Improve tests.
+  - Drop the public `build_pattern()` method.
 
 0.0202 2025-09-22 13:38:26
   - Fix arppegiation logic again...
