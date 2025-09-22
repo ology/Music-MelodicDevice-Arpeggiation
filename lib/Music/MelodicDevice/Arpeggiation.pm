@@ -6,6 +6,7 @@ our $VERSION = '0.0104';
 
 use Moo;
 use strictures 2;
+use Array::Circular ();
 use Data::Dumper::Compact qw(ddc);
 use namespace::clean;
 
@@ -114,10 +115,11 @@ Create a new C<Music::MelodicDevice::Arpeggiation> object.
 
   $notes = $arp->arp(\@pitches); # use object defaults
   $notes = $arp->arp(\@pitches, $duration);
+  $notes = $arp->arp(\@pitches, $duration, 0); # <- 0 = random pattern
   $notes = $arp->arp(\@pitches, $duration, \@pattern);
   $notes = $arp->arp(\@pitches, $duration, \@pattern, $repeats);
 
-Return a list of lists of C<d#> MIDI-Perl strings with the pitches indexed by the arpeggiated pattern. These MIDI-Perl duration strings are distributed evenly across the given C<duration>.
+Return a list of lists of C<d#> MIDI-Perl strings with the pitches indexed by the arpeggiated pattern. These MIDI-Perl duration strings are distributed evenly across the given C<duration>. If the `pattern` is specifically set to an integer greater than zero, random pitch selection is used for that many pitches.
 
 So given a duration of 1 (a quarter-note), a list of 4 notes to arpeggiate, an arpeggiation pattern of C<[0,1,2,3]>, and 1 repeat, this method will return a list of lists with length of the duration divided by the number of pitches. An item of the list is itself a list of 2 elements: the divided duration and the selected pitch given the pattern index.
 
@@ -127,21 +129,27 @@ sub arp {
     my ($self, $notes, $duration, $pattern, $repeats) = @_;
 
     $duration ||= $self->duration;
-    $pattern  ||= $self->pattern;
     $repeats  ||= $self->repeats;
 
-    my $number = @$notes; # Number of notes in the arpeggiation
+    if (defined($pattern) && !ref($pattern) && $pattern =~ /^\d+$/) {
+        $pattern = [ map { rand @$notes } 1 .. $pattern ];
+    }
+    else {
+        $pattern ||= $self->pattern;
+    }
 
-    # Compute the ornament durations
+    # compute the arp durations
     my $x = $duration * TICKS;
-    my $z = sprintf '%0.f', $x / $number;
+    my $z = sprintf '%0.f', $x / @$notes;
     print "Durations: $x, $z\n" if $self->verbose;
     $z = 'd' . $z;
 
+    my $pat = Array::Circular->new(@$pattern);
     my @arp;
     for my $i (1 .. $repeats) {
-        for my $p (@$pattern) {
-            push @arp, [ $z, $notes->[$p] ];
+        for my $j (0 .. $#$notes) {
+            push @arp, [ $z, $notes->[ $pat->current ] ];
+            $pat->next;
         }
     }
     print 'Arp: ', ddc(\@arp) if $self->verbose;
