@@ -173,7 +173,7 @@ sub build_pattern {
     my $dispatch = {
       up     => [ 0 .. $#$notes ],
       down   => [ reverse(0 .. $#$notes) ],
-      random => [ (rand @$notes) x @$notes ]
+      random => [ map { rand @$notes } @$notes ]
     };
     return [];
 }
