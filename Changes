@@ -1,6 +1,7 @@
 Revision history for Music-MelodicDevice-Arpeggiation
 
 {{$NEXT}}
+  - Wow. Leftover paste cruft?? Wow.
 
 0.0200 2025-09-22 12:39:15
   - Refactor how patterns are constructed and handled with named types.
