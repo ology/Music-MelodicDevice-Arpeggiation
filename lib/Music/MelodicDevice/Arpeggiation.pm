@@ -176,12 +176,7 @@ Return an array reference of C<notes> indexes, based on the C<type>, if known.
 
 sub build_pattern {
     my ($self, $type, $notes) = @_;
-    my $dispatch = {
-      up     => [ 0 .. $#$notes ],
-      down   => [ reverse(0 .. $#$notes) ],
-      random => [ map { rand @$notes } @$notes ]
-    };
-    return $dispatch->{$type};
+    return $self->arp_type($type)->($notes);
 }
 
 =head2 arp_type
