@@ -121,9 +121,8 @@ Create a new C<Music::MelodicDevice::Arpeggiation> object.
 
   $notes = $arp->arp(\@pitches); # use object defaults
   $notes = $arp->arp(\@pitches, $duration);
-  $notes = $arp->arp(\@pitches, $duration, 0); # <- 0 = random pattern
-  $notes = $arp->arp(\@pitches, $duration, \@pattern);
-  $notes = $arp->arp(\@pitches, $duration, \@pattern, $repeats);
+  $notes = $arp->arp(\@pitches, $duration, $type);
+  $notes = $arp->arp(\@pitches, $duration, $type, $repeats);
 
 Return a list of lists of C<d#> MIDI-Perl strings with the pitches indexed by the arpeggiated pattern. These MIDI-Perl duration strings are distributed evenly across the given C<duration>. If the `pattern` is specifically set to an integer greater than zero, random pitch selection is used for that many pitches.
 
@@ -138,7 +137,7 @@ sub arp {
     $type     ||= $self->type;
     $repeats  ||= $self->repeats;
 
-    my $pattern = $self->build_pattern($type, $notes);
+    my $pattern = ref $type eq 'ARRAY' ? $type : $self->build_pattern($type, $notes);
 
     my $pat = Array::Circular->new(@$pattern);
 
@@ -164,7 +163,7 @@ sub arp {
 
   my $pattern = $self->build_pattern($type, $notes);
 
-Return an array refrerence of C<note> list indexes, based on the type, if known.
+Return an array refrerence of C<notes> indexes, based on the C<type>, if known.
 
 =cut
 
