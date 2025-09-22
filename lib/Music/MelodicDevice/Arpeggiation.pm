@@ -145,6 +145,7 @@ sub arp {
     $z = 'd' . $z;
 
     my $pat = Array::Circular->new(@$pattern);
+
     my @arp;
     for my $i (1 .. $repeats) {
         for my $j (0 .. $#$notes) {
