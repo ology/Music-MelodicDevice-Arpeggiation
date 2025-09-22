@@ -114,9 +114,10 @@ has verbose => (
 =head2 new
 
   $x = Music::MelodicDevice::Arpeggiation->new(
-    scale_note => $scale_note,
-    scale_name => $scale_name,
-    verbose    => $verbose,
+    type     => $type,
+    duration => $duration,
+    repeats  => $repeats,
+    verbose  => $verbose,
   );
 
 Create a new C<Music::MelodicDevice::Arpeggiation> object.
