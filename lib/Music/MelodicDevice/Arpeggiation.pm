@@ -148,7 +148,7 @@ sub arp {
     $type     ||= $self->type;
     $repeats  ||= $self->repeats;
 
-    my $pattern = ref $type eq 'ARRAY' ? $type : $self->build_pattern($type, $notes);
+    my $pattern = ref $type eq 'ARRAY' ? $type : $self->_build_pattern($type, $notes);
 
     my $pat = Array::Circular->new(@$pattern);
 
@@ -170,15 +170,7 @@ sub arp {
     return \@arp;
 }
 
-=head2 build_pattern
-
-  my $pattern = $self->build_pattern($type, $notes);
-
-Return an array reference of C<notes> indexes, based on the C<type>, if known.
-
-=cut
-
-sub build_pattern {
+sub _build_pattern {
     my ($self, $type, $notes) = @_;
     return $self->arp_type($type)->($notes);
 }
