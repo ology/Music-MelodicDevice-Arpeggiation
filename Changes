@@ -1,6 +1,8 @@
 Revision history for Music-MelodicDevice-Arpeggiation
 
 {{$NEXT}}
+
+0.0202 2025-09-22 13:38:26
   - Fix arppegiation logic again...
   - Improve documentation.
   - Improve tests.
