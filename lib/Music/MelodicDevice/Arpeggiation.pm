@@ -58,7 +58,7 @@ Known types:
 
 has type => (
     is      => 'rw',
-    isa     => sub { die "$_[0] does not look like a named type" unless $_[0] =~ /^\w+$/ },
+    isa     => sub { die "$_[0] is not a known named type" unless exists $DISPATCH->{$_[0]} },
     default => sub { 'up' },
 );
 
