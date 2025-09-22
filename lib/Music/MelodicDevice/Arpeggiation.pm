@@ -175,7 +175,7 @@ sub build_pattern {
       down   => [ reverse(0 .. $#$notes) ],
       random => [ map { rand @$notes } @$notes ]
     };
-    return [];
+    return $dispatch->{$type};
 }
 
 1;
