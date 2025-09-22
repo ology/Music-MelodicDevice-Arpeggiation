@@ -124,9 +124,7 @@ Create a new C<Music::MelodicDevice::Arpeggiation> object.
   $notes = $arp->arp(\@pitches, $duration, $type);
   $notes = $arp->arp(\@pitches, $duration, $type, $repeats);
 
-Return a list of lists of C<d#> MIDI-Perl strings with the pitches indexed by the arpeggiated pattern. These MIDI-Perl duration strings are distributed evenly across the given C<duration>. If the `pattern` is specifically set to an integer greater than zero, random pitch selection is used for that many pitches.
-
-So given a duration of 1 (a quarter-note), a list of 4 notes to arpeggiate, an arpeggiation pattern of C<[0,1,2,3]>, and 1 repeat, this method will return a list of lists with length of the duration divided by the number of pitches. An item of the list is itself a list of 2 elements: the divided duration and the selected pitch given the pattern index.
+Return a list of lists of C<d#> MIDI-Perl strings with the pitches indexed by the arpeggiated pattern built from the given C<type>. These MIDI-Perl duration strings are distributed evenly across the given C<duration>.
 
 =cut
 
