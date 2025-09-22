@@ -27,21 +27,27 @@ groups of notes.
 
 =head1 ATTRIBUTES
 
-=head2 pattern
+=head2 type
 
-  $arp->pattern(\@pattern);
-  $pattern = $arp->pattern;
+  $arp->type($type);
+  $type = $arp->type;
 
-Default: C<[0,1,2]>
+Default: C<up>
 
-Arpeggiation note index selection pattern.
+Arpeggiation named type.
+
+Known types:
+
+  up
+  down
+  random
 
 =cut
 
-has pattern => (
+has type => (
     is      => 'rw',
-    isa     => sub { die "$_[0] is not an array reference" unless ref($_[0]) eq 'ARRAY' },
-    default => sub { [0,1,2] },
+    isa     => sub { die "$_[0] does not look like a named type" unless $_[0] =~ /^\w+$/ },
+    default => sub { 'up' },
 );
 
 =head2 duration
@@ -126,17 +132,15 @@ So given a duration of 1 (a quarter-note), a list of 4 notes to arpeggiate, an a
 =cut
 
 sub arp {
-    my ($self, $notes, $duration, $pattern, $repeats) = @_;
+    my ($self, $notes, $duration, $type, $repeats) = @_;
 
     $duration ||= $self->duration;
+    $type     ||= $self->type;
     $repeats  ||= $self->repeats;
 
-    if (defined($pattern) && !ref($pattern) && $pattern =~ /^\d+$/) {
-        $pattern = [ map { rand @$notes } 1 .. $pattern ];
-    }
-    else {
-        $pattern ||= $self->pattern;
-    }
+    my $pattern = $self->build_pattern($type, $notes);
+
+    my $pat = Array::Circular->new(@$pattern);
 
     # compute the arp durations
     my $x = $duration * TICKS;
@@ -144,11 +148,9 @@ sub arp {
     print "Durations: $x, $z\n" if $self->verbose;
     $z = 'd' . $z;
 
-    my $pat = Array::Circular->new(@$pattern);
-
     my @arp;
     for my $i (1 .. $repeats) {
-        for my $j (0 .. $#$notes) {
+        for my $j (1 .. @$notes) {
             push @arp, [ $z, $notes->[ $pat->current ] ];
             $pat->next;
         }
@@ -158,12 +160,32 @@ sub arp {
     return \@arp;
 }
 
+=head2 build_pattern
+
+  my $pattern = $self->build_pattern($type, $notes);
+
+Return an array refrerence of C<note> list indexes, based on the type, if known.
+
+=cut
+
+sub build_pattern {
+    my ($self, $type, $notes) = @_;
+    my $dispatch = {
+      up     => [ 0 .. $#$notes ],
+      down   => [ reverse(0 .. $#$notes) ],
+      random => [ (rand @$notes) x @$notes ]
+    };
+    return [];
+}
+
 1;
 __END__
 
 =head1 SEE ALSO
 
-The F<t/01-methods.t> and F<eg/*> programs in this distribution
+The F<t/01-methods.t> program in this distribution
+
+L<Array::Circular>
 
 L<Data::Dumper::Compact>
 
