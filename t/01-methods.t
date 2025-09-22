@@ -6,6 +6,7 @@ use_ok 'Music::MelodicDevice::Arpeggiation';
 subtest defaults => sub {
     my $mda = new_ok 'Music::MelodicDevice::Arpeggiation';# => [ verbose => 1 ];
     is $mda->duration, 1, 'duratiion';
+    is $mda->type, 'up', 'type';
     is $mda->repeats, 1, 'repeats';
 };
 
