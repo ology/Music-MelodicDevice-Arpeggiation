@@ -169,7 +169,7 @@ sub arp {
 
   my $pattern = $self->build_pattern($type, $notes);
 
-Return an array refrerence of C<notes> indexes, based on the C<type>, if known.
+Return an array reference of C<notes> indexes, based on the C<type>, if known.
 
 =cut
 
