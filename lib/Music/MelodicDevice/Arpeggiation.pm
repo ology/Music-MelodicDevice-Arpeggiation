@@ -34,6 +34,30 @@ groups of notes.
 
 =head1 ATTRIBUTES
 
+=head2 type
+
+  $arp->type($type);
+  $type = $arp->type;
+
+Default: C<up>
+
+Arpeggiation named type.
+
+Known types:
+
+  up
+  down
+  updown
+  random
+
+=cut
+
+has type => (
+    is      => 'rw',
+    isa     => sub { die "$_[0] does not look like a named type" unless $_[0] =~ /^\w+$/ },
+    default => sub { 'up' },
+);
+
 =head2 duration
 
   $arp->duration($duration);
