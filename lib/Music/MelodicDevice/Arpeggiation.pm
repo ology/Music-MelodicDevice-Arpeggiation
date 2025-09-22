@@ -15,6 +15,7 @@ use constant TICKS => 96;
 my $DISPATCH = {
     up     => sub { my ($notes) = @_; return [ 0 .. $#$notes ] },
     down   => sub { my ($notes) = @_; return [ reverse(0 .. $#$notes) ] },
+    updown => sub { my ($notes) = @_; return [ 0 .. $#$notes, reverse(0 .. $#$notes) ] },
     random => sub { my ($notes) = @_; return [ map { rand @$notes } @$notes ] },
 };
 
@@ -24,7 +25,7 @@ my $DISPATCH = {
 
   my $arp = Music::MelodicDevice::Arpeggiation->new;
 
-  my $arped = $arp->arp([60,64,67], 1, [0,1,2,1], 3);
+  my $arped = $arp->arp([60,64,67], 1, 'updown', 3);
 
 =head1 DESCRIPTION
 
@@ -32,29 +33,6 @@ C<Music::MelodicDevice::Arpeggiation> applies arpeggiation patterns to
 groups of notes.
 
 =head1 ATTRIBUTES
-
-=head2 type
-
-  $arp->type($type);
-  $type = $arp->type;
-
-Default: C<up>
-
-Arpeggiation named type.
-
-Known types:
-
-  up
-  down
-  random
-
-=cut
-
-has type => (
-    is      => 'rw',
-    isa     => sub { die "$_[0] does not look like a named type" unless $_[0] =~ /^\w+$/ },
-    default => sub { 'up' },
-);
 
 =head2 duration
 
