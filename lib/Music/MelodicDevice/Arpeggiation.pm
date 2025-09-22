@@ -25,7 +25,11 @@ my $DISPATCH = {
 
   my $arp = Music::MelodicDevice::Arpeggiation->new;
 
+  $arp->arp_type('my_type', sub { my ($notes); return [0,2,1] }); # set a new type
+
   my $arped = $arp->arp([60,64,67], 1, 'updown', 3);
+
+  my $pattern = $arp->build_pattern('my-type', [60,65,67,69]);
 
 =head1 DESCRIPTION
 
