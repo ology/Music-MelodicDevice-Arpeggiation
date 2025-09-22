@@ -2,7 +2,7 @@ package Music::MelodicDevice::Arpeggiation;
 
 # ABSTRACT: Apply arpeggiation patterns to groups of notes
 
-our $VERSION = '0.0201';
+our $VERSION = '0.0202';
 
 use Moo;
 use strictures 2;
@@ -29,7 +29,7 @@ my $DISPATCH = {
 
   my $arped = $arp->arp([60,64,67], 1, 'updown', 3);
 
-  my $pattern = $arp->build_pattern('my-type', [60,65,67,69]);
+  my $pattern = $arp->build_pattern('my-type', [60,65,67,69]); # [0,2,1]
 
 =head1 DESCRIPTION
 
