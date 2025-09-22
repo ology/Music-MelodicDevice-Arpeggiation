@@ -15,7 +15,7 @@ use constant TICKS => 96;
 my $DISPATCH = {
     up     => sub { my ($notes) = @_; return [ 0 .. $#$notes ] },
     down   => sub { my ($notes) = @_; return [ reverse(0 .. $#$notes) ] },
-    updown => sub { my ($notes) = @_; return [ 0 .. $#$notes, reverse(0 .. $#$notes) ] },
+    updown => sub { my ($notes) = @_; return [ 0 .. $#$notes, reverse(1 .. $#$notes - 1) ] },
     random => sub { my ($notes) = @_; return [ map { rand @$notes } @$notes ] },
 };
 
