@@ -28,4 +28,15 @@ subtest arp => sub {
     # is_deeply $got, [['d16', 67],['d16', 64],['d16', 60]], 'arp';
 };
 
+subtest arp_type => sub {
+    my $mda = new_ok 'Music::MelodicDevice::Arpeggiation';# => [ verbose => 1 ];
+    my $got = $mda->arp_type;
+    is ref($got), 'HASH', 'arp_type';
+    $got = $mda->arp_type('up');
+    is ref($got), 'CODE', 'arp_type';
+    $mda->arp_type('foo', sub { 42 });
+    $got = $mda->arp_type('foo');
+    is ref($got), 'CODE', 'arp_type';
+};
+
 done_testing();
