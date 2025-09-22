@@ -189,7 +189,7 @@ sub build_pattern {
   $coderef = $self->arp_type($type); # get the value
   $self->arp_type($type, $coderef); # set a new type
 
-For no arguments, return the full hash refrerence of all arpeggiation
+For no arguments, return the full hash reference of all arpeggiation
 types. For a single argument, return the code-reference value of that
 type, of known. If two arguments are given, add the named C<type> to
 the known arpeggiation types with its code-reference value.
