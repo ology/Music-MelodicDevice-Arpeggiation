@@ -12,6 +12,12 @@ use namespace::clean;
 
 use constant TICKS => 96;
 
+my $DISPATCH = {
+    up     => sub { my ($notes) = @_; return [ 0 .. $#$notes ] },
+    down   => sub { my ($notes) = @_; return [ reverse(0 .. $#$notes) ] },
+    random => sub { my ($notes) = @_; return [ map { rand @$notes } @$notes ] },
+};
+
 =head1 SYNOPSIS
 
   use Music::MelodicDevice::Arpeggiation;
@@ -173,6 +179,38 @@ sub build_pattern {
       random => [ map { rand @$notes } @$notes ]
     };
     return $dispatch->{$type};
+}
+
+=head2 arp_type
+
+  $all_types = $self->arp_type # get everything
+  $coderef = $self->arp_type($type); # get the value
+  $self->arp_type($type, $coderef); # set a new type
+
+For no arguments, return the full hash refrerence of all arpeggiation
+types. For a single argument, return the code-reference value of that
+type, of known. If two arguments are given, add the named C<type> to
+the known arpeggiation types with its code-reference value.
+
+Known types and their code-ref values are:
+
+  up     => sub { my ($notes) = @_; return [ 0 .. $#$notes ] },
+  down   => sub { my ($notes) = @_; return [ reverse(0 .. $#$notes) ] },
+  random => sub { my ($notes) = @_; return [ map { rand @$notes } @$notes ] },
+
+=cut
+
+sub arp_type {
+    my ($self, $type, $coderef) = @_;
+    if ($type && $coderef) {
+        $DISPATCH->{$type} = $coderef;
+    }
+    elsif ($type) {
+        return $DISPATCH->{$type};
+    }
+    else {
+        return $DISPATCH;
+    }
 }
 
 1;
