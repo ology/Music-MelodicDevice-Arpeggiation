@@ -1,6 +1,7 @@
 Revision history for Music-MelodicDevice-Arpeggiation
 
 {{$NEXT}}
+  - Refactor how patterns are constructed and handled.
 
 0.0104 2025-09-21 17:07:31
   - Improve the arp() method description.
