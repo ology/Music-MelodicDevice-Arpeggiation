@@ -29,6 +29,12 @@ subtest arp => sub {
     # is_deeply $got, [['d16', 67],['d16', 64],['d16', 60]], 'arp';
 };
 
+subtest build_pattern => sub {
+    my $mda = new_ok 'Music::MelodicDevice::Arpeggiation';# => [ verbose => 1 ];
+    my $got = $mda->build_pattern('updown', [60,64,67]);
+    is_deeply $got, [0,1,2,1], 'build_pattern';
+};
+
 subtest arp_type => sub {
     my $mda = new_ok 'Music::MelodicDevice::Arpeggiation';# => [ verbose => 1 ];
     my $got = $mda->arp_type;
