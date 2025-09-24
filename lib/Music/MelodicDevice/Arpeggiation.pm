@@ -25,9 +25,13 @@ my $DISPATCH = {
 
   my $arp = Music::MelodicDevice::Arpeggiation->new;
 
-  $arp->arp_type('my_type', sub { my ($notes); return [0,2,1] }); # set a new type
+  # set a new pattern type
+  $arp->arp_type('my_type', sub { my ($notes); return [0,2,1] });
 
-  my $arped = $arp->arp([60,64,67], 1, 'updown', 3);
+  # arpeggiate the 'updown' pattern
+  my $arped = $arp->arp(['C4','E4','G4'], 1, 'updown');
+  # [['d24', 'C4'],['d24', 'E4'],['d24', 'G4'],['d24', 'E4']]
+  $arped = $arp->arp([60,64,67], 1, 'updown', 3); # midinums repeated 3 times
 
 =head1 DESCRIPTION
 
