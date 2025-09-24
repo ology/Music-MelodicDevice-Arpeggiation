@@ -32,7 +32,7 @@ my $DISPATCH = {
 =head1 DESCRIPTION
 
 C<Music::MelodicDevice::Arpeggiation> applies arpeggiation patterns to
-groups of notes.
+groups of notes that can be used with MIDI-Perl.
 
 =head1 ATTRIBUTES
 
