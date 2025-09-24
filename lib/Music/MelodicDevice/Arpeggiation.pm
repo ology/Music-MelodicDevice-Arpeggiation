@@ -154,14 +154,15 @@ sub arp {
 
     # compute the arp durations
     my $x = $duration * TICKS;
-    my $z = sprintf '%0.f', $x / @$notes;
+    my $z = sprintf '%0.f', $x / @$pattern;
     print "Durations: $x, $z\n" if $self->verbose;
     $z = 'd' . $z;
 
     my @arp;
     for my $i (1 .. $repeats) {
-        for my $j (1 .. @$notes) {
-            push @arp, [ $z, $notes->[ $pat->current ] ];
+        for my $j (1 .. @$pattern) {
+            push @arp, [ $z, $notes->[ $pat->current ] ]
+                if $pat->current < @$notes;
             $pat->next;
         }
     }
