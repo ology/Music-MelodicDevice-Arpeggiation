@@ -1,6 +1,7 @@
 Revision history for Music-MelodicDevice-Arpeggiation
 
 {{$NEXT}}
+  - Add the eg/arp.pl example program.
 
 0.0300 2025-09-24 10:27:49
   - Refactored how arpeggiation works, again. :|
