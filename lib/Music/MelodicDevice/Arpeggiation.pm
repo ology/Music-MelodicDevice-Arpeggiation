@@ -135,7 +135,10 @@ Create a new C<Music::MelodicDevice::Arpeggiation> object.
   $notes = $arp->arp(\@pitches, $duration, $type);
   $notes = $arp->arp(\@pitches, $duration, $type, $repeats);
 
-Return a list of lists of C<d#> MIDI-Perl strings with the pitches indexed by the arpeggiated pattern built from the given C<type>. These MIDI-Perl duration strings are distributed evenly across the given C<duration>.
+Return a list of lists of C<d#> MIDI-Perl strings with the pitches
+indexed by the arpeggiated pattern built from the given C<type>. These
+MIDI-Perl duration strings are distributed evenly across the given
+C<duration>.
 
 =cut
 
