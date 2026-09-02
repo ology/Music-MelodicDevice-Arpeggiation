@@ -25,13 +25,13 @@ my $DISPATCH = {
 
   my $arp = Music::MelodicDevice::Arpeggiation->new;
 
-  # set a new pattern type
-  $arp->arp_type('my_type', sub { my ($notes); return [0,2,1] });
-
   # arpeggiate the 'updown' pattern
   my $arped = $arp->arp(['C4','E4','G4'], 1, 'updown');
   # [['d24', 'C4'],['d24', 'E4'],['d24', 'G4'],['d24', 'E4']]
   $arped = $arp->arp([60,64,67], 1, 'updown', 3); # midinums repeated 3 times
+
+  # set a new pattern type
+  $arp->arp_type('my_type', sub { my ($notes); return [0,2,1] });
 
 =head1 DESCRIPTION
 
@@ -139,10 +139,8 @@ Create a new C<Music::MelodicDevice::Arpeggiation> object.
   $notes = $arp->arp(\@pitches, $duration, $type);
   $notes = $arp->arp(\@pitches, $duration, $type, $repeats);
 
-Return a list of lists of C<d#> MIDI-Perl strings with the pitches
-indexed by the arpeggiated pattern built from the given C<type>. These
-MIDI-Perl duration strings are distributed evenly across the given
-C<duration>.
+Return a list of lists of MIDI-Perl notes of the form,
+C<['d16','E4']>.
 
 =cut
 
