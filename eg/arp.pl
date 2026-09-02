@@ -8,9 +8,9 @@ use Music::MelodicDevice::Arpeggiation ();
 use Music::Chord::Progression ();
 
 my $prog = Music::Chord::Progression->new(
-    max => 16,
+    max        => 16,
     scale_name => 'wholetone',
-    net => {
+    net        => {
         1 => [2,3,4,5,6],
         2 => [1,3,4,5,6],
         3 => [1,2,4,5,6],
@@ -18,9 +18,9 @@ my $prog = Music::Chord::Progression->new(
         5 => [1,2,3,4,6],
         6 => [1,2,3,4,5],
     },
-    chord_map => [('7') x 6], # every chord is the same flavor
+    chord_map  => [('7') x 6], # every chord is the same flavor
     substitute => 1,
-    verbose => 0,
+    verbose    => 0,
 );
 my $chords = $prog->generate;
 # print ddc $chords;
