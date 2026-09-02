@@ -25,13 +25,13 @@ my $prog = Music::Chord::Progression->new(
 my $chords = $prog->generate;
 # print ddc $chords;
 
-my $arp = Music::MelodicDevice::Arpeggiation->new;
+my $arp = Music::MelodicDevice::Arpeggiation->new(verbose => 1);
 
 my $score = setup_score(bpm => 100);
 
 for my $c (@$chords) {
-    my $arped = $arp->arp($c, 1, 'updown');
-    # print ddc $arped;
+    my $arped = $arp->arp($c, 1, 'diverge');
+    print ddc $arped;
     for my $n (@$arped) {
       $score->n(midi_format(@$n));
     }

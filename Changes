@@ -1,6 +1,8 @@
 Revision history for Music-MelodicDevice-Arpeggiation
 
 {{$NEXT}}
+  - Fix the "updown" arp_type.
+  - Add the `converge()` and `diverge()` arp_types.
 
 0.0303 2026-09-01 19:18:57
   - Improve documentation.

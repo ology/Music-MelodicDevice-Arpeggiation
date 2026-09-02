@@ -8,15 +8,18 @@ use Moo;
 use strictures 2;
 use Array::Circular ();
 use Data::Dumper::Compact qw(ddc);
+use Music::Note ();
 use namespace::clean;
 
 use constant TICKS => 96;
 
 my $DISPATCH = {
-    up     => sub { my ($notes) = @_; return [ 0 .. $#$notes ] },
-    down   => sub { my ($notes) = @_; return [ reverse(0 .. $#$notes) ] },
-    updown => sub { my ($notes) = @_; return [ 0 .. $#$notes, reverse(1 .. $#$notes - 1) ] },
-    random => sub { my ($notes) = @_; return [ map { rand @$notes } @$notes ] },
+    up       => sub { my ($notes) = @_; return [ 0 .. $#$notes ] },
+    down     => sub { my ($notes) = @_; return [ reverse(0 .. $#$notes) ] },
+    updown   => sub { my ($notes) = @_; return [ 0 .. $#$notes, reverse(0 .. $#$notes - 1) ] },
+    random   => sub { my ($notes) = @_; return [ map { rand @$notes } @$notes ] },
+    converge => \&converge,
+    diverge  => \&diverge,
 };
 
 =head1 SYNOPSIS
@@ -152,6 +155,7 @@ sub arp {
     $repeats  ||= $self->repeats;
 
     my $pattern = ref $type eq 'ARRAY' ? $type : $self->_build_pattern($type, $notes);
+    print "Pattern: @$pattern\n" if $self->verbose;
 
     my $pat = Array::Circular->new(@$pattern);
 
@@ -210,6 +214,38 @@ sub arp_type {
     else {
         return $DISPATCH;
     }
+}
+
+sub converge {
+    my ($pitches) = @_;
+ 
+    my @by_pitch = sort { _pitch_value($pitches->[$a]) <=> _pitch_value($pitches->[$b]) } 0 .. $#$pitches;
+ 
+    my ($lo, $hi) = (0, $#by_pitch);
+    my $take_low = 1;
+    my @pattern;
+ 
+    while ($lo <= $hi) {
+        if ($lo == $hi) {
+            push @pattern, $by_pitch[$lo];
+            last;
+        }
+        push @pattern, $take_low ? $by_pitch[$lo++] : $by_pitch[$hi--];
+        $take_low = !$take_low;
+    }
+ 
+    return \@pattern;
+}
+
+sub diverge {
+    my ($pitches) = @_;
+    return [ reverse @{ converge($pitches) } ];
+}
+
+sub _pitch_value {
+    my ($pitch) = @_;
+    return $pitch if $pitch =~ /^\d+$/;
+    return Music::Note->new($pitch, 'ISO')->format('midinum');
 }
 
 1;
