@@ -1,5 +1,7 @@
 #perl
+
 use Test::More;
+use Data::Dumper::Compact qw(ddc);
 
 use_ok 'Music::MelodicDevice::Arpeggiation';
 
@@ -49,7 +51,9 @@ subtest arp_type => sub {
     $got = $mda->_build_pattern('updown', [60,61,62,63]);
     is_deeply $got, [0,1,2,3,2,1,0], 'build_pattern';
     $got = $mda->arp(['C4','E4','G4'], 1, 'updown');
-    is_deeply $got, [['d24', 'C4'],['d24', 'E4'],['d24', 'G4'],['d24', 'E4']], 'updown';
+    is_deeply $got, [
+        ['d19','C4'], ['d19','E4'], ['d19','G4'], ['d19','E4'], ['d19','C4'],
+    ], 'updown';
 
 };
 
