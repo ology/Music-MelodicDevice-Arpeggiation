@@ -218,13 +218,13 @@ sub arp_type {
 
 sub converge {
     my ($pitches) = @_;
- 
+
     my @by_pitch = sort { _pitch_value($pitches->[$a]) <=> _pitch_value($pitches->[$b]) } 0 .. $#$pitches;
- 
+
     my ($lo, $hi) = (0, $#by_pitch);
     my $take_low = 1;
     my @pattern;
- 
+
     while ($lo <= $hi) {
         if ($lo == $hi) {
             push @pattern, $by_pitch[$lo];
@@ -233,7 +233,7 @@ sub converge {
         push @pattern, $take_low ? $by_pitch[$lo++] : $by_pitch[$hi--];
         $take_low = !$take_low;
     }
- 
+
     return \@pattern;
 }
 
