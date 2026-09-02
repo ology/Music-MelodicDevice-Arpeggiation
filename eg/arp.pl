@@ -18,7 +18,7 @@ my $prog = Music::Chord::Progression->new(
         5 => [1,2,3,4,6],
         6 => [1,2,3,4,5],
     },
-    chord_map  => [('7') x 6], # every chord is the same flavor
+    chord_map  => [('7') x 6], # every chord is the same flavor: 7th
     substitute => 1,
     verbose    => 0,
 );
