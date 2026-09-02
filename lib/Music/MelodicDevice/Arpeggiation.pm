@@ -217,7 +217,7 @@ __END__
 
 =head1 SEE ALSO
 
-The F<t/01-methods.t> program in this distribution
+The tests, F<t/01-methods.t> and the F<eg/*> programs in this distribution.
 
 L<Array::Circular>
 
