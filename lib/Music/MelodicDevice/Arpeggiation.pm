@@ -58,6 +58,8 @@ Known types:
   down
   updown
   random
+  converge
+  diverge
 
 =cut
 
