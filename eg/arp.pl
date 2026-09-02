@@ -30,7 +30,7 @@ my $arp = Music::MelodicDevice::Arpeggiation->new(verbose => 1);
 my $score = setup_score(bpm => 100);
 
 for my $c (@$chords) {
-    my $arped = $arp->arp($c, 1, 'diverge');
+    my $arped = $arp->arp($c, 1, 'converge');
     print ddc $arped;
     for my $n (@$arped) {
       $score->n(midi_format(@$n));
