@@ -14,12 +14,14 @@ use namespace::clean;
 use constant TICKS => 96;
 
 my $DISPATCH = {
-    up       => sub { my ($notes) = @_; return [ 0 .. $#$notes ] },
-    down     => sub { my ($notes) = @_; return [ reverse(0 .. $#$notes) ] },
-    updown   => sub { my ($notes) = @_; return [ 0 .. $#$notes, reverse(0 .. $#$notes - 1) ] },
-    random   => sub { my ($notes) = @_; return [ map { rand @$notes } @$notes ] },
-    converge => \&converge,
-    diverge  => \&diverge,
+    up         => sub { my ($notes) = @_; return [ 0 .. $#$notes ] },
+    down       => sub { my ($notes) = @_; return [ reverse(0 .. $#$notes) ] },
+    updown     => sub { my ($notes) = @_; return [ 0 .. $#$notes, reverse(0 .. $#$notes - 1) ] },
+    random     => sub { my ($notes) = @_; return [ map { rand @$notes } @$notes ] },
+    converge   => \&converge,
+    diverge    => \&diverge,
+    pedal_up   => \&pedal_up,
+    pedal_down => \&pedal_down,
 };
 
 =head1 SYNOPSIS
@@ -60,6 +62,8 @@ Known types:
   random
   converge
   diverge
+  pedal_up
+  pedal_down
 
 =cut
 
@@ -247,6 +251,45 @@ Return a list of notes from the middle to the outer extremes.
 sub diverge {
     my ($pitches) = @_;
     return [ reverse @{ converge($pitches) } ];
+}
+
+=head2 pedal_up
+
+Return a list of notes that climb by repeatedly returning to the
+lowest note between each successive, higher note. For example, given
+four notes C<(0,1,2,3)>, the returned pattern is C<(0,1,0,2,0,3)>.
+
+=cut
+
+sub pedal_up {
+    my ($pitches) = @_;
+
+    return [ 0 ] if @$pitches <= 1;
+
+    my @pattern;
+    push @pattern, 0, $_ for 1 .. $#$pitches;
+
+    return \@pattern;
+}
+
+=head2 pedal_down
+
+Return a list of notes that descend by repeatedly returning to the
+highest note between each successive, lower note. For example, given
+four notes C<(0,1,2,3)>, the returned pattern is C<(3,2,3,1,3,0)>.
+
+=cut
+
+sub pedal_down {
+    my ($pitches) = @_;
+
+    return [ 0 ] if @$pitches <= 1;
+
+    my $top = $#$pitches;
+    my @pattern;
+    push @pattern, $top, $_ for reverse 0 .. $top - 1;
+
+    return \@pattern;
 }
 
 sub _pitch_value {
