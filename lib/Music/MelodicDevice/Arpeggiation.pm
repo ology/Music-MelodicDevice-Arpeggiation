@@ -14,14 +14,15 @@ use namespace::clean;
 use constant TICKS => 96;
 
 my $DISPATCH = {
-    up         => sub { my ($notes) = @_; return [ 0 .. $#$notes ] },
-    down       => sub { my ($notes) = @_; return [ reverse(0 .. $#$notes) ] },
-    updown     => sub { my ($notes) = @_; return [ 0 .. $#$notes, reverse(0 .. $#$notes - 1) ] },
-    random     => sub { my ($notes) = @_; return [ map { rand @$notes } @$notes ] },
-    converge   => \&converge,
-    diverge    => \&diverge,
-    pedal_up   => \&pedal_up,
-    pedal_down => \&pedal_down,
+    up            => sub { my ($notes) = @_; return [ 0 .. $#$notes ] },
+    down          => sub { my ($notes) = @_; return [ reverse(0 .. $#$notes) ] },
+    updown        => sub { my ($notes) = @_; return [ 0 .. $#$notes, reverse(0 .. $#$notes - 1) ] },
+    random        => sub { my ($notes) = @_; return [ map { rand @$notes } @$notes ] },
+    converge      => \&converge,
+    diverge       => \&diverge,
+    pedal_up      => \&pedal_up,
+    pedal_down    => \&pedal_down,
+    pedal_updown  => \&pedal_updown,
 };
 
 =head1 SYNOPSIS
@@ -64,6 +65,7 @@ Known types:
   diverge
   pedal_up
   pedal_down
+  pedal_updown
 
 =cut
 
@@ -290,6 +292,25 @@ sub pedal_down {
     push @pattern, $top, $_ for reverse 0 .. $top - 1;
 
     return \@pattern;
+}
+
+=head2 pedal_updown
+
+Return a list of notes that climb to the highest note through the
+lowest ("pedal") note, then descend back down to the lowest note
+through the highest note as the new pedal. For example, given four
+notes C<(0,1,2,3)>, the returned pattern is C<(0,1,0,2,0,3,2,3,1,3,0)>.
+
+=cut
+
+sub pedal_updown {
+    my ($pitches) = @_;
+
+    my $up = pedal_up($pitches);
+    return $up if @$up <= 1;
+
+    my $down = pedal_down($pitches);
+    return [ @$up, @{$down}[ 1 .. $#$down ] ];
 }
 
 sub _pitch_value {

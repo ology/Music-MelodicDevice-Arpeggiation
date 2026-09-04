@@ -92,6 +92,24 @@ subtest pedal => sub {
     is_deeply $got, [ ['d96', 60] ], 'pedal_up single note';
     $got = $mda->arp([60], 1, 'pedal_down');
     is_deeply $got, [ ['d96', 60] ], 'pedal_down single note';
+
+    $got = $mda->_build_pattern('pedal_updown', [60,61,62,63]);
+    is_deeply $got, [0,1,0,2,0,3,2,3,1,3,0], 'build_pattern pedal_updown';
+
+    $got = $mda->arp([60,64,67,69], 1, 'pedal_updown');
+    is_deeply $got, [
+        ['d9', 60],['d9', 64],['d9', 60],['d9', 67],['d9', 60],['d9', 69],
+        ['d9', 67],['d9', 69],['d9', 64],['d9', 69],['d9', 60],
+    ], 'pedal_updown';
+
+    $got = $mda->arp(['C4','E4','G4'], 1, 'pedal_updown');
+    is_deeply $got, [
+        ['d14','C4'],['d14','E4'],['d14','C4'],['d14','G4'],
+        ['d14','E4'],['d14','G4'],['d14','C4'],
+    ], 'pedal_updown strings';
+
+    $got = $mda->arp([60], 1, 'pedal_updown');
+    is_deeply $got, [ ['d96', 60] ], 'pedal_updown single note';
 };
 
 done_testing();
