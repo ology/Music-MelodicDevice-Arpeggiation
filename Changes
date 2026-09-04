@@ -1,6 +1,8 @@
 Revision history for Music-MelodicDevice-Arpeggiation
 
 {{$NEXT}}
+
+0.0501 2026-09-03 21:10:00
   - Add the "pedal_updown" type, too!
 
 0.0500 2026-09-03 20:53:19
