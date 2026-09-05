@@ -2,7 +2,7 @@ package Music::MelodicDevice::Arpeggiation;
 
 # ABSTRACT: Apply arpeggiation patterns to groups of notes
 
-our $VERSION = '0.0501';
+our $VERSION = '0.0502';
 
 use Moo;
 use strictures 2;
@@ -17,7 +17,7 @@ my $DISPATCH = {
     up            => sub { my ($notes) = @_; return [ 0 .. $#$notes ] },
     down          => sub { my ($notes) = @_; return [ reverse(0 .. $#$notes) ] },
     updown        => sub { my ($notes) = @_; return [ 0 .. $#$notes, reverse(0 .. $#$notes - 1) ] },
-    random        => sub { my ($notes) = @_; return [ map { rand @$notes } @$notes ] },
+    random        => sub { my ($notes) = @_; return [ map { int rand @$notes } @$notes ] },
     converge      => \&converge,
     diverge       => \&diverge,
     pedal_up      => \&pedal_up,
