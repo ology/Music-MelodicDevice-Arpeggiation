@@ -163,14 +163,14 @@ sub arp {
     $repeats  ||= $self->repeats;
 
     my $pattern = ref $type eq 'ARRAY' ? $type : $self->_build_pattern($type, $notes);
-    print "Pattern: @$pattern\n" if $self->verbose;
+    print "Repeat: $repeats, Type: $type, Pattern: @$pattern\n" if $self->verbose;
 
     my $pat = Array::Circular->new(@$pattern);
 
     # compute the arp durations
     my $x = $duration * TICKS;
     my $z = sprintf '%0.f', $x / @$pattern;
-    print "Durations: $x, $z\n" if $self->verbose;
+    print "Ticks: $x, Duration: $z\n" if $self->verbose;
     $z = 'd' . $z;
 
     my @arp;
