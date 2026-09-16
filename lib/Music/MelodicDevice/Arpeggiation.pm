@@ -181,8 +181,10 @@ sub arp {
             $pat->next;
         }
     }
-    print 'Arp: ', ddc(\@arp) if $self->verbose;
-
+    if ($self->verbose) {
+        print 'Notes: ', ddc($notes);
+        print 'Arp: ', ddc(\@arp);
+    }
     return \@arp;
 }
 
