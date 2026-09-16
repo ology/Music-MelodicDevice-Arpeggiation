@@ -2,7 +2,7 @@ package Music::MelodicDevice::Arpeggiation;
 
 # ABSTRACT: Apply arpeggiation patterns to groups of notes
 
-our $VERSION = '0.0503';
+our $VERSION = '0.0504';
 
 use Moo;
 use strictures 2;
